@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"strict": true,
+		"jsx": "preserve",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"lib": ["ESNext", "DOM"],
+		"skipLibCheck": true,
+		// 设置baseUrl来告诉编译器到哪里去查找模块
+		"baseUrl": "./",
+		// 模块名到基于baseUrl的路径映射的列表
+		"paths": {
+			"@/*": ["src/*"],
+			"views/*": ["src/views/*"],
+			"components/*": ["src/components/*"],
+			"assets/*": ["src/assets/*"]
+		}
+	},
+	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"exclude": ["node_modules", "dist"],
+	"references": [{ "path": "./tsconfig.node.json" }]
+}
