@@ -20,7 +20,8 @@
 			"views/*": ["src/views/*"],
 			"components/*": ["src/components/*"],
 			"assets/*": ["src/assets/*"]
-		}
+		},
+		"types": ["element-plus/global"]
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
 	"exclude": ["node_modules", "dist"],
