@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { VisualEditorModelValue } from '@/types'
+import { VisualEditorModelValue, VisualEditorBlockData } from '@/types'
 
 const useStore = defineStore('visualEditor', {
 	state: () => ({
@@ -10,13 +10,17 @@ const useStore = defineStore('visualEditor', {
 				width: 500,
 			},
 			blocks: [
-				{ top: 100, left: 100 },
-				{ top: 200, left: 200 },
+				{ top: 100, left: 100, componentKey: 'button', hasAdjustPosition: false },
+				{ top: 200, left: 200, componentKey: 'input', hasAdjustPosition: false },
 			],
 		} as VisualEditorModelValue,
 	}),
 	getters: {},
-	actions: {},
+	actions: {
+		addBlock(block: VisualEditorBlockData) {
+			this.$state.visualEditor.blocks.push(block)
+		},
+	},
 })
 
 export default useStore

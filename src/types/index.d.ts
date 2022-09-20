@@ -4,6 +4,10 @@ export interface VisualEditorBlockData {
 	// 绝对位置的定位
 	top: number
 	left: number
+	// 对应Block的key
+	componentKey: string
+	// 是否已经调整过位置
+	hasAdjustPosition: boolean
 }
 
 // 编辑器整体模型

@@ -3,7 +3,7 @@
 		<el-container>
 			<!-- 左侧菜单 组件 -->
 			<el-aside width="355px">
-				<Menu></Menu>
+				<Menu :containerRef="containerRef"></Menu>
 			</el-aside>
 			<el-container>
 				<!-- 头部区域 -->
@@ -11,7 +11,7 @@
 				<!-- 编辑器 -->
 				<el-main>
 					<div class="content">
-						<div class="container" :style="containerStyles">
+						<div class="container" :style="containerStyles" ref="containerRef">
 							<!-- 渲染所有的块 -->
 							<VisualEditorBlock v-for="(block, index) in blocks" :block="block" :key="index" />
 						</div>
@@ -25,10 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import VisualEditorBlock from '@/components/VisualEditorBlock/index.vue'
+import VisualEditorBlock from '@/components/VisualEditorBlock/index.tsx'
 import Menu from '@/components/Menu/index.js'
 import Store from '@/store'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const store = Store()
 
@@ -38,6 +38,8 @@ const containerStyles = computed(() => ({
 	height: `${store.$state.visualEditor.container.height}px`,
 }))
 const blocks = store.$state.visualEditor.blocks
+
+const containerRef = ref({} as HTMLElement)
 </script>
 
 <style scoped lang="less">
