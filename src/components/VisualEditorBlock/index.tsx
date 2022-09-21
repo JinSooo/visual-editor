@@ -31,8 +31,13 @@ export default defineComponent({
 		return () => {
 			const component = visualEditorConfig.componentMap[props.block!.componentKey]
 			const renderBlock = component?.render()
+
 			return (
-				<div class="visual-editor-block" style={styles.value} ref={blockRef}>
+				<div
+					class={['visual-editor-block', props.block?.focus ? ' visual-editor-block-focus' : '']}
+					style={styles.value}
+					ref={blockRef}
+				>
 					{renderBlock}
 				</div>
 			)

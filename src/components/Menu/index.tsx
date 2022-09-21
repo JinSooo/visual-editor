@@ -47,11 +47,10 @@ const menuDragger = (() => {
 			console.log('y', e.offsetY)
 
 			const store = Store()
-			store.addBlock({
+			store.createNewBlock({
 				top: e.offsetY,
 				left: e.offsetX,
 				componentKey: current.component?.key!,
-				hasAdjustPosition: false,
 			})
 		},
 	}
@@ -83,7 +82,7 @@ const renderDom = (props: Props) => {
 			{list.map(component => (
 				<div
 					class="menu-item"
-					draggable
+					draggable="true"
 					onDragstart={e => menuDragger.dragstart(e, component, props.containerRef)}
 					onDragend={menuDragger.dragend}
 				>

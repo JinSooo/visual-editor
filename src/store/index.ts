@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { VisualEditorModelValue, VisualEditorBlockData } from '@/types'
+import { VisualEditorModelValue, VisualEditorBlockData, VisualEditorComponent } from '@/types'
 
 const useStore = defineStore('visualEditor', {
 	state: () => ({
@@ -10,15 +10,30 @@ const useStore = defineStore('visualEditor', {
 				width: 500,
 			},
 			blocks: [
-				{ top: 100, left: 100, componentKey: 'button', hasAdjustPosition: false },
-				{ top: 200, left: 200, componentKey: 'input', hasAdjustPosition: false },
+				{ top: 100, left: 100, componentKey: 'button', hasAdjustPosition: false, focus: false },
+				{ top: 200, left: 200, componentKey: 'input', hasAdjustPosition: false, focus: false },
 			],
 		} as VisualEditorModelValue,
 	}),
 	getters: {},
 	actions: {
-		addBlock(block: VisualEditorBlockData) {
+		createNewBlock(block: { componentKey: string; top: number; left: number }) {
+			const newBlock: VisualEditorBlockData = { ...block, hasAdjustPosition: false, focus: false }
+			this.addNewBlock(newBlock)
+		},
+		addNewBlock(block: VisualEditorBlockData) {
 			this.$state.visualEditor.blocks.push(block)
+		},
+		// 清空其他Block的选中状态
+		clearFocus(block?: VisualEditorBlockData) {
+			const { blocks } = this.$state.visualEditor
+			if (blocks.length === 0) return
+
+			let filterBlocks = blocks
+			if (block) {
+				filterBlocks = filterBlocks.filter(b => b !== block)
+			}
+			filterBlocks.forEach(b => (b.focus = false))
 		},
 	},
 })

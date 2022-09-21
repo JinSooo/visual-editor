@@ -1,3 +1,20 @@
+@import '../../assets//css/variable.less';
+
 .visual-editor-block {
 	position: absolute;
+	&::after {
+		@space: -3px;
+		content: '';
+		position: absolute;
+		top: @space;
+		left: @space;
+		right: @space;
+		bottom: @space;
+		z-index: -1;
+	}
+	&-focus {
+		&::after {
+			border: 1px dashed @primary;
+		}
+	}
 }

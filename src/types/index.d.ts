@@ -8,6 +8,8 @@ export interface VisualEditorBlockData {
 	componentKey: string
 	// 是否已经调整过位置
 	hasAdjustPosition: boolean
+	// 是否选中
+	focus: boolean
 }
 
 // 编辑器整体模型
