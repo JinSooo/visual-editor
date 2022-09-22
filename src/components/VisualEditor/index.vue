@@ -7,7 +7,9 @@
 			</el-aside>
 			<el-container>
 				<!-- 头部区域 -->
-				<el-header height="60px">Header</el-header>
+				<el-header height="60px">
+					<Header></Header>
+				</el-header>
 				<!-- 编辑器 -->
 				<el-main>
 					<div class="content">
@@ -36,10 +38,12 @@
 
 <script setup lang="ts">
 import VisualEditorBlock from '@/components/VisualEditorBlock/index.js'
+import Header from '@/components/Header/index.vue'
 import Menu from '@/components/Menu/index.js'
 import Store from '@/store'
 import { computed, ref } from 'vue'
 import { VisualEditorBlockData } from '@/types'
+import { storeToRefs } from 'pinia'
 
 const store = Store()
 
@@ -49,20 +53,9 @@ const containerStyles = computed(() => ({
 	height: `${store.$state.visualEditor.container.height}px`,
 }))
 // 块数组
-const blocks = store.$state.visualEditor.blocks
+const { blocks } = storeToRefs(store)
 // 容器元素
 const containerRef = ref({} as HTMLElement)
-
-const focusData = computed(() => {
-	// 所有选中的Block
-	const focus: VisualEditorBlockData[] = blocks.filter(b => b.focus)
-	// 所有未选中的Block
-	const unfocus: VisualEditorBlockData[] = blocks.filter(b => !b.focus)
-	return {
-		focus,
-		unfocus,
-	}
-})
 
 // 选择并进行拖拽的事件处理
 const blockDraggerHandler = (() => {
@@ -74,6 +67,8 @@ const blockDraggerHandler = (() => {
 		startPos: [] as { left: number; top: number }[],
 	}
 	const { container } = store.$state.visualEditor
+	// 防止丢失响应
+	const { focusData } = storeToRefs(store)
 
 	const onMouseMove = (e: MouseEvent) => {
 		const moveX = e.clientX - dragState.startX
@@ -159,13 +154,14 @@ const focusHandler = (() => {
 		overflow-y: auto;
 		width: 100%;
 		height: 100%;
-		// background-color: rgba(255, 255, 255, 0.5);
+		background-color: rgba(255, 255, 255, 0.5);
 		.container {
 			position: relative;
 			flex-shrink: 0;
 			flex-grow: 0;
 			border: 2px solid @ibl;
 			// background-color: #eee;
+			box-shadow: 0 0 12px rgb(27 39 208 / 10%);
 		}
 	}
 }

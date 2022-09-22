@@ -15,7 +15,20 @@ const useStore = defineStore('visualEditor', {
 			],
 		} as VisualEditorModelValue,
 	}),
-	getters: {},
+	getters: {
+		focusData: state => {
+			const { blocks } = state.visualEditor
+			// 所有选中的Block
+			const focus: VisualEditorBlockData[] = blocks.filter(b => b.focus)
+			// 所有未选中的Block
+			const unfocus: VisualEditorBlockData[] = blocks.filter(b => !b.focus)
+			return {
+				focus,
+				unfocus,
+			}
+		},
+		blocks: state => state.visualEditor.blocks,
+	},
 	actions: {
 		createNewBlock(block: { componentKey: string; top: number; left: number }) {
 			const newBlock: VisualEditorBlockData = { ...block, hasAdjustPosition: false, focus: false }
@@ -34,6 +47,9 @@ const useStore = defineStore('visualEditor', {
 				filterBlocks = filterBlocks.filter(b => b !== block)
 			}
 			filterBlocks.forEach(b => (b.focus = false))
+		},
+		deleteFocus() {
+			this.$state.visualEditor.blocks = this.focusData.unfocus
 		},
 	},
 })
