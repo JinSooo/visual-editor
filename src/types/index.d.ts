@@ -10,6 +10,11 @@ export interface VisualEditorBlockData {
 	hasAdjustPosition: boolean
 	// 是否选中
 	focus: boolean
+	// Block的宽高
+	width: number
+	height: number
+	// 是否调整过宽高
+	hasResize: boolean
 }
 
 // 编辑器整体模型
@@ -32,5 +37,10 @@ export interface VisualEditorComponent {
 	// 在左侧菜单栏的显示样式
 	preview: () => Components
 	// 在编辑器上渲染出的样式
-	render: () => Components
+	render: (data: { size: { width?: number; height?: number } }) => Components
+	// 调整大小
+	resize?: {
+		width?: boolean
+		height?: boolean
+	}
 }

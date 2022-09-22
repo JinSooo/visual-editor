@@ -71,11 +71,20 @@ const blockDraggerHandler = (() => {
 	const { focusData } = storeToRefs(store)
 
 	const onMouseMove = (e: MouseEvent) => {
-		const moveX = e.clientX - dragState.startX
-		const moveY = e.clientY - dragState.startY
+		let moveX = e.clientX - dragState.startX
+		let moveY = e.clientY - dragState.startY
 		let moveTop, moveLeft
 
 		focusData.value.focus.forEach((b, i) => {
+			// 是否是水平、垂直拖拽
+			if (e.shiftKey) {
+				if (Math.abs(moveX) > Math.abs(moveY)) {
+					moveY = 0
+				} else {
+					moveX = 0
+				}
+			}
+
 			// 判断是否超出边界
 			moveTop = dragState.startPos[i].top + moveY
 			moveLeft = dragState.startPos[i].left + moveX
@@ -120,7 +129,7 @@ const focusHandler = (() => {
 		blockHandler: {
 			onMousedown: (e: MouseEvent, block: VisualEditorBlockData) => {
 				e.stopPropagation()
-				e.preventDefault()
+				// e.preventDefault()
 
 				// 未选中的状态下才去处理
 				if (!block.focus) {

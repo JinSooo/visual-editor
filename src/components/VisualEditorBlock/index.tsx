@@ -1,6 +1,7 @@
 import { VisualEditorBlockData } from '@/types/index'
-import { computed, defineComponent, PropType, ref, onMounted, render } from 'vue'
+import { computed, defineComponent, PropType, ref, onMounted } from 'vue'
 import visualEditorConfig from '@/config/VisualEditorComponent/config'
+import BlockResizer from '@/components/BlockResizer'
 import './index.less'
 
 export default defineComponent({
@@ -25,12 +26,17 @@ export default defineComponent({
 				block!.left -= offsetWidth / 2
 				block!.top -= offsetHeight / 2
 				block!.hasAdjustPosition = true
+				block!.width = offsetWidth
+				block!.height = offsetHeight
 			}
 		})
 
 		return () => {
 			const component = visualEditorConfig.componentMap[props.block!.componentKey]
-			const renderBlock = component?.render()
+			const { width, height } = component.resize!
+			const renderBlock = component?.render({
+				size: props.block?.hasResize ? { width: props.block?.width, height: props.block?.height } : {},
+			})
 
 			return (
 				<div
@@ -39,6 +45,9 @@ export default defineComponent({
 					ref={blockRef}
 				>
 					{renderBlock}
+					{props.block?.focus && (width || height) && (
+						<BlockResizer block={props.block} component={component}></BlockResizer>
+					)}
 				</div>
 			)
 		}

@@ -10,8 +10,26 @@ const useStore = defineStore('visualEditor', {
 				width: 500,
 			},
 			blocks: [
-				{ top: 100, left: 100, componentKey: 'button', hasAdjustPosition: false, focus: false },
-				{ top: 200, left: 200, componentKey: 'input', hasAdjustPosition: false, focus: false },
+				{
+					top: 100,
+					left: 100,
+					componentKey: 'button',
+					hasAdjustPosition: false,
+					focus: false,
+					width: 0,
+					height: 0,
+					hasResize: false,
+				},
+				{
+					top: 200,
+					left: 200,
+					componentKey: 'input',
+					hasAdjustPosition: false,
+					focus: false,
+					width: 0,
+					height: 0,
+					hasResize: false,
+				},
 			],
 		} as VisualEditorModelValue,
 	}),
@@ -31,7 +49,14 @@ const useStore = defineStore('visualEditor', {
 	},
 	actions: {
 		createNewBlock(block: { componentKey: string; top: number; left: number }) {
-			const newBlock: VisualEditorBlockData = { ...block, hasAdjustPosition: false, focus: false }
+			const newBlock: VisualEditorBlockData = {
+				...block,
+				hasAdjustPosition: false,
+				focus: false,
+				width: 0,
+				height: 0,
+				hasResize: false,
+			}
 			this.addNewBlock(newBlock)
 		},
 		addNewBlock(block: VisualEditorBlockData) {

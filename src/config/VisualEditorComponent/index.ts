@@ -11,7 +11,14 @@ export function createVisualEditorConfig() {
 		componentMap,
 		// 注册一个组件Block
 		registry: (key: string, component: Omit<VisualEditorComponent, 'key'>) => {
-			const comp: VisualEditorComponent = { ...component, key }
+			const comp: VisualEditorComponent = {
+				...component,
+				key,
+				resize: {
+					width: component.resize?.width ?? false,
+					height: component.resize?.height ?? false,
+				},
+			}
 			componentList.push(comp)
 			componentMap[key] = comp
 		},
