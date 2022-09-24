@@ -44,3 +44,15 @@ export interface VisualEditorComponent {
 		height?: boolean
 	}
 }
+
+// 辅助线
+export interface VisualEditorMarkLine {
+	x: {
+		left: number
+		showLeft: number
+	}[]
+	y: {
+		top: number
+		showTop: number
+	}[]
+}
