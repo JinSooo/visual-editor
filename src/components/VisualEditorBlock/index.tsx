@@ -34,6 +34,7 @@ export default defineComponent({
 		return () => {
 			const component = visualEditorConfig.componentMap[props.block!.componentKey]
 			const { width, height } = component.resize!
+			// 如果调整过大小，就使用，否则默认值
 			const renderBlock = component?.render({
 				size: props.block?.hasResize ? { width: props.block?.width, height: props.block?.height } : {},
 			})

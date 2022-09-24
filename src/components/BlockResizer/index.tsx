@@ -36,12 +36,20 @@ export default defineComponent({
 			const mousemove = (e: MouseEvent) => {
 				const { startX, startY, startWidth, startHeight, direction, startLeft, startTop } = data
 				let { clientX: cX, clientY: cY } = e
+				/**
+				 * 判断点位 如果是上中/中左则
+				 * 高宽的其中一个方向固定住
+				 */
 				if (direction.vertical === Direction.CENTER) cY = startY
 				if (direction.horizontal === Direction.CENTER) cX = startX
 
 				const { block } = props
 				let moveX = cX - startX
 				let moveY = cY - startY
+				/**
+				 * 如果点位 是左上角
+				 * 移动的数值其实是负数，所以要拿到它的正值
+				 */
 				if (direction.vertical === Direction.START) {
 					moveY = -moveY
 					block!.top = startTop - moveY
@@ -50,7 +58,7 @@ export default defineComponent({
 					moveX = -moveX
 					block!.left = startLeft - moveX
 				}
-				console.log(startWidth + moveX, startHeight + moveY)
+				// 计算出高度
 				block!.width = startWidth + moveX
 				block!.height = startHeight + moveY
 				block!.hasResize = true
@@ -66,6 +74,7 @@ export default defineComponent({
 				document.addEventListener('mouseup', mouseup)
 
 				const { block } = props
+				// 初始化数据
 				data = {
 					direction,
 					startX: e.clientX,
